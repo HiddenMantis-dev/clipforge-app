@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="../logo.svg"><link rel="stylesheet" href="../style.css"><title>Connecting… — CLIPFORGE</title></head><body><header><img src="../logo.svg" alt=""><a class="brand" href="../">CLIP<i>FORGE</i></a><nav><a href="../">Home</a><a href="../terms.html">Terms</a><a href="../privacy.html">Privacy</a></nav></header><main>
+<h1 id="h">Connecting your account…</h1>
+<div class="card" id="box">
+<p id="msg">Sending the sign-in back to CLIPFORGE on this computer.</p>
+<p class="muted">If nothing happens, copy this address into CLIPFORGE (Accounts → TikTok → “Paste the address”) and press Finish:</p>
+<input id="addr" readonly onclick="this.select()"><button id="copy">Copy address</button>
+<a class="btn" id="go" href="#">Open CLIPFORGE</a>
+</div>
+<script>
+const q = new URLSearchParams(location.search), addr = document.getElementById("addr");
+addr.value = location.href;
+document.getElementById("copy").onclick = () => { addr.select(); navigator.clipboard?.writeText(location.href); document.getElementById("copy").textContent = "Copied"; };
+const port = q.get("port") || localStorage.getItem("clipforgePort") || "8765";
+const target = `http://127.0.0.1:${port}/oauth/tiktok${location.search}`;
+document.getElementById("go").href = target;
+if (q.get("error")) {
+  document.getElementById("h").textContent = "Sign-in was cancelled";
+  document.getElementById("msg").textContent = "TikTok said: " + (q.get("error_description") || q.get("error")) + ". Go back to CLIPFORGE and press Connect again.";
+} else if (q.get("code")) {
+  setTimeout(() => { location.href = target; }, 600);
+} else {
+  document.getElementById("h").textContent = "TikTok sign-in page for CLIPFORGE";
+  document.getElementById("msg").textContent = "This page receives the TikTok sign-in and hands it to CLIPFORGE on the owner's computer. There is nothing to do here.";
+}
+</script>
+</main><footer>CLIPFORGE is a personal tool operated by HiddenMantis. Questions: <a href="https://github.com/HiddenMantis-dev/clipforge-app/issues">open an issue</a>. Last updated October 9, 2026.</footer></body></html>
