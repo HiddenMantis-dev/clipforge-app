@@ -10,7 +10,7 @@
 const q = new URLSearchParams(location.search), addr = document.getElementById("addr");
 addr.value = location.href;
 document.getElementById("copy").onclick = () => { addr.select(); navigator.clipboard?.writeText(location.href); document.getElementById("copy").textContent = "Copied"; };
-const port = q.get("port") || localStorage.getItem("clipforgePort") || "8765";
+const port = q.get("port") || localStorage.getItem("clipforgePort") || "8780";
 const target = `http://127.0.0.1:${port}/oauth/tiktok${location.search}`;
 document.getElementById("go").href = target;
 if (q.get("error")) {
